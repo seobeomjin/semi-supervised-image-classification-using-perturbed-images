@@ -22,13 +22,13 @@
 ### comparison to base images and generated images  
 1) weakly augmented images
 ![waekly augmented image](./images/weak_img.png)
-<br>
+
 2) strongly augmented images
 ![strongly augmented image](./images/strong_img.png)
-<br>
+
 3) CVAE sampled images
 ![CVAE sampled images](./images/cvae_sampled_img.png)
-<br>
+
 4) CVAE randomized smoothing images (noise level σ=0.84)
 ![CVAE randomized smoothing images](./images/cvae_randsmooth.png)
 
