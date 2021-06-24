@@ -9,26 +9,26 @@
 
 ## proposed model 
 
-나는 pseudo labeling 과 consistency regaularization term이 모두 결국은 좋은 representation 을 학습하는 기술적인 방법으로서 이용된다고 생각했다. 좋은 represetation을 학습시키는 것이 관건이고, FixMatch framework에서 더 다양하게 input image의 변형을 주어 consistency regularization term 을 학습에 활용할 수 있다면 더 좋은 represetation 을 학습하게 할 수 있지 않을까? 라고 생각하게 되었다. 따라서 본 프로젝트에서는 strong augmented image를 대체할 수 있는, pertuerbed image generation network 을 학습하여 모델에게 다양한 augmented image를 주어 좋은 representation을 가지게 하는 것을 목표로 하였다. 
-
 1) main framework 
 ![Architecture](./images/model_arch.jpg)
 
 2) strong image generator 
 ![generator](./images/generator.jpg)
 
+위의 task에서는 label data가 희소한 상황에서 좋은 representation을 학습하는 것이 중요하다고 생각했다. 이를 위해 pseudo labeling 과 consistency regaularization term이 모두 좋은 representation 을 학습하는 기술적인 방법으로서 이용된다고 생각했다. 좋은 represetation을 학습시키는 것이 관건이고, FixMatch framework에서 더 다양하게 input image의 변형을 주어 consistency regularization term 을 학습에 활용할 수 있다면 더 좋은 represetation 을 학습하게 할 수 있지 않을까? 라고 생각하게 되었다. 따라서 본 프로젝트에서는 strong augmented image를 대체할 수 있는, pertuerbed image generation network 을 학습하여 모델에게 다양한 augmented image를 주어 좋은 representation을 가지게 하는 것을 목표로 하였다. 
+
 ## results and analysis 
 
 ### comparison to base images and generated images  
 1) weakly augmented images
 ![waekly augmented image](./images/weak_img.png)
-
+<br>
 2) strongly augmented images
 ![strongly augmented image](./images/strong_img.png)
-
+<br>
 3) CVAE sampled images
 ![CVAE sampled images](./images/cvae_sampled_img.png)
-
+<br>
 4) CVAE randomized smoothing images (noise level σ=0.84)
 ![CVAE randomized smoothing images](./images/cvae_randsmooth.png)
 
@@ -50,8 +50,7 @@
 
 2) 데이터가 stronger(기존의 strongly augmented image보다 strong) 하다 보니, mask rate는 더 낮은 것으로 보인다.
 
-3) Test time에는 이런 stronger 데이터들이 잘 들어오지 않으니, stronger data는 그렇게 큰 효능을 내지 못하는 것으로 보인다.  
-        사실상 비현실적인 이미지에 더 가깝다. 이미지의 붕괴가 너무 지나쳐, 학습에 유용하지 않은 데이터로 변질되었다.
+3) Test time에는 이런 stronger 데이터들이 잘 들어오지 않으니, stronger data는 그렇게 큰 효능을 내지 못하는 것으로 보인다. 사실상 비현실적인 이미지에 더 가깝다. 이미지의 붕괴가 너무 지나쳐, 학습에 유용하지 않은 데이터로 변질되었다.
 
 ## future plans 
 1) Conditional generative model의 image 생성 정도를 조절하여 좀 더 realistic augmented image를 생성시키는 데에 초점을 맞춰야 한다고 생각한다. 만약 realistic image를 잘 생성했다면 cutout 과 같은 기술을 사용하면 의미있으면서 어려운 이미지가 만들어질 것이라 생각된다.
