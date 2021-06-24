@@ -44,6 +44,9 @@
 | Unsupervised loss | 0.22 | 0.19 | 0.18 | 0.19 |
 | Mask rate | 0.88 | 0.82 | 0.81 | 0.82 |
 
+This is the table of experiments. <br>
+The task is the cifar10 image classification with 4000 labels, and seed number is 5.
+
 ### Analysis
 1) Fixmatch 보다 상대적으로 supervised data는 덜 학습하고, unsupervised loss에 더 학습하고 있음을 확인할 수 있다. 
         데이터가 어렵다보니 더 집중적으로 학습하려는 경향이 있는 것으로 보인다.
@@ -51,6 +54,22 @@
 2) 데이터가 stronger(기존의 strongly augmented image보다 strong) 하다 보니, mask rate는 더 낮은 것으로 보인다.
 
 3) Test time에는 이런 stronger 데이터들이 잘 들어오지 않으니, stronger data는 그렇게 큰 효능을 내지 못하는 것으로 보인다. 사실상 비현실적인 이미지에 더 가깝다. 이미지의 붕괴가 너무 지나쳐, 학습에 유용하지 않은 데이터로 변질되었다.
+
+## Usage 
+
+1) train the generator(CVAE) to make perturbed images (cifar100)
+    python train_cvae.py --config cifar100_StrongAug.json --gpu-id 2 --dataset cifar100_for_cvae_train
+
+2) train a classifier 
+    2-1) train a model with sampled images (cifar10,4000 labels, seed #5 ) 
+        python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 3 --seed 5 --out results/cvae_aug_cifar10@4000.5_test --config-robust configs/cifar10_wideresnet_cvae_aug.json
+    2-2) train a model with randomized smoothing σ=0.84 (cifar10,4000 labels, seed #5 ) 
+        python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 2 --seed 5 --out results/cvae_smoothing_084_cifar10@4000.5 --config-robust cifar10_wideresnet_cvae_smoothing_084.json
+    2-3) train a model with sampled images (cifar10,4000 labels, seed #5 ) 
+        python train.py --gpu-id 2 --dataset cifar100 --num-labeled 400 --arch wideresnet --batch-size 16 --total-step 262144 --lr 0.03 --wdecay 0.001 --expand-labels --seed 5 --out results/cifar100@400-2 --config-robust cifar100_wideresnet_cvae_aug.json
+
+    
+
 
 ## future plans 
 1) Conditional generative model의 image 생성 정도를 조절하여 좀 더 realistic augmented image를 생성시키는 데에 초점을 맞춰야 한다고 생각한다. 만약 realistic image를 잘 생성했다면 cutout 과 같은 기술을 사용하면 의미있으면서 어려운 이미지가 만들어질 것이라 생각된다.
