@@ -61,17 +61,18 @@ The task is the cifar10 image classification with 4000 labels, and seed number i
 ```
 python train_cvae.py --config cifar100_StrongAug.json --gpu-id 2 --dataset cifar100_for_cvae_train
 ```
-2) train a classifier <br> 
-    2-1) train a model with sampled images (cifar10,4000 labels, seed #5 )
+2) train a classifier<br>
+
+2-1. train a model with sampled images (cifar10,4000 labels, seed #5 )
 
 ```
 python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 3 --seed 5 --out results/cvae_aug_cifar10@4000.5_test --config-robust configs/cifar10_wideresnet_cvae_aug.json 
 ```
-    2-2) train a model with randomized smoothing σ=0.84 (cifar10,4000 labels, seed #5 ) 
+2-2. train a model with randomized smoothing σ=0.84 (cifar10,4000 labels, seed #5 ) 
 ``` 
 python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 2 --seed 5 --out results/cvae_smoothing_084_cifar10@4000.5 --config-robust cifar10_wideresnet_cvae_smoothing_084.json 
 ```
-    2-3) train a model with sampled images (cifar10,4000 labels, seed #5 ) 
+2-3. train a model with sampled images (cifar10,4000 labels, seed #5 ) 
 ``` 
 python train.py --gpu-id 2 --dataset cifar100 --num-labeled 400 --arch wideresnet --batch-size 16 --total-step 262144 --lr 0.03 --wdecay 0.001 --expand-labels --seed 5 --out results/cifar100@400-2 --config-robust cifar100_wideresnet_cvae_aug.json 
 ```
