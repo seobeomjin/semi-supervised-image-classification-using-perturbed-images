@@ -22,12 +22,15 @@
 ### comparison to base images and generated images  
 1) weakly augmented images
 ![waekly augmented image](./images/weak_img.png)
+
 2) strongly augmented images
 ![strongly augmented image](./images/strong_img.png)
+
 3) CVAE sampled images
-![waekly augmented image](./images/cvae_sampled_img.png)
+![CVAE sampled images](./images/cvae_sampled_img.png)
+
 4) CVAE randomized smoothing images (noise level σ=0.84)
-![waekly augmented image](./images/cvae_randsmooth.png)
+![CVAE randomized smoothing images](./images/cvae_randsmooth.png)
 
 원래의 목적은, 더욱 현실적이고 더욱 다양한 환경에서 있을법한 augmented image를 생성하는 것이었다. 반면, 생성된 이미지를 확인해보면 다양한 perturbation이 섞여 현실에 존재하지 않을 법한 이미지를 생성해 낸 것을 확인할 수 있다. 
 이는 기존의 strongly augmented image에 비해서도 더 어려운, 사람으로서도 구분이 힘든 stronger augmented image라고 볼 수 있다. 
@@ -51,4 +54,12 @@
         사실상 비현실적인 이미지에 더 가깝다. 이미지의 붕괴가 너무 지나쳐, 학습에 유용하지 않은 데이터로 변질되었다.
 
 ## future plans 
+1) Conditional generative model의 image 생성 정도를 조절하여 좀 더 realistic augmented image를 생성시키는 데에 초점을 맞춰야 한다고 생각한다. 만약 realistic image를 잘 생성했다면 cutout 과 같은 기술을 사용하면 의미있으면서 어려운 이미지가 만들어질 것이라 생각된다.
+
+2) 한편, FixMatch 알고리즘 자체의 단점으로서는, label이 애초에 희박한 환경이라면, 초기에 supervised loss term 으로부터 좋은 rerpresentation을 학습하는 데 어려웁이 있다. 따라서 unlabeled image를 이용하는 self-supervised learning을 통해 representation 을 먼저 학습한 뒤, label을 활용하여 classifier를 fine tuning 해 준다.   
+
 ## reference 
+[1] Sohn, Kihyuk, et al. "Fixmatch: Simplifying semi-supervised learning with consistency and confidence." arXiv preprint arXiv:2001.07685 (2020).<br>
+[2] Wong, Eric, and J. Zico Kolter. "Learning perturbation sets for robust machine learning." arXiv preprint arXiv:2007.08450 (2020).
+
+
