@@ -57,19 +57,24 @@ The task is the cifar10 image classification with 4000 labels, and seed number i
 
 ## Usage 
 
-1) train the generator(CVAE) to make perturbed images (cifar100)
-    python train_cvae.py --config cifar100_StrongAug.json --gpu-id 2 --dataset cifar100_for_cvae_train
+1) train the generator(CVAE) to make perturbed images (cifar100) 
+```
+python train_cvae.py --config cifar100_StrongAug.json --gpu-id 2 --dataset cifar100_for_cvae_train
+```
+2) train a classifier <br> 
+2-1) train a model with sampled images (cifar10,4000 labels, seed #5 )
 
-2) train a classifier 
-    2-1) train a model with sampled images (cifar10,4000 labels, seed #5 ) 
-        python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 3 --seed 5 --out results/cvae_aug_cifar10@4000.5_test --config-robust configs/cifar10_wideresnet_cvae_aug.json
-    2-2) train a model with randomized smoothing σ=0.84 (cifar10,4000 labels, seed #5 ) 
-        python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 2 --seed 5 --out results/cvae_smoothing_084_cifar10@4000.5 --config-robust cifar10_wideresnet_cvae_smoothing_084.json
-    2-3) train a model with sampled images (cifar10,4000 labels, seed #5 ) 
-        python train.py --gpu-id 2 --dataset cifar100 --num-labeled 400 --arch wideresnet --batch-size 16 --total-step 262144 --lr 0.03 --wdecay 0.001 --expand-labels --seed 5 --out results/cifar100@400-2 --config-robust cifar100_wideresnet_cvae_aug.json
-
-    
-
+```
+python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 3 --seed 5 --out results/cvae_aug_cifar10@4000.5_test --config-robust configs/cifar10_wideresnet_cvae_aug.json 
+```
+2-2) train a model with randomized smoothing σ=0.84 (cifar10,4000 labels, seed #5 ) 
+``` 
+python train.py --dataset cifar10 --num-labeled 4000 --arch wideresnet --batch-size 64 --total-step 262144 --lr 0.03 --expand-labels --gpu-id 2 --seed 5 --out results/cvae_smoothing_084_cifar10@4000.5 --config-robust cifar10_wideresnet_cvae_smoothing_084.json 
+```
+2-3) train a model with sampled images (cifar10,4000 labels, seed #5 ) 
+``` 
+python train.py --gpu-id 2 --dataset cifar100 --num-labeled 400 --arch wideresnet --batch-size 16 --total-step 262144 --lr 0.03 --wdecay 0.001 --expand-labels --seed 5 --out results/cifar100@400-2 --config-robust cifar100_wideresnet_cvae_aug.json 
+```
 
 ## future plans 
 1) Conditional generative model의 image 생성 정도를 조절하여 좀 더 realistic augmented image를 생성시키는 데에 초점을 맞춰야 한다고 생각한다. 만약 realistic image를 잘 생성했다면 cutout 과 같은 기술을 사용하면 의미있으면서 어려운 이미지가 만들어질 것이라 생각된다.
